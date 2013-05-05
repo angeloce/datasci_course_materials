@@ -1408,7 +1408,7 @@ lackadaisical	-2
 lag	-1
 lagged	-2
 lagging	-2
-lags	-2
+lags	-2sda
 lame	-2
 landmark	2
 laugh	1
