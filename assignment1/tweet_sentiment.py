@@ -15,7 +15,7 @@ def set_sentiment_sheet(filename):
     for line in sent_file:
         word, score = line.split('\t', 1)
         try:
-            word = word.strip()
+            word = word.lower().strip()
             score = float(score.strip())
         except:
             continue
@@ -30,29 +30,34 @@ def set_sentiment_sheet(filename):
     sent_file.close()
 
 
+def get_sentiment(tweet):
+    sentiment = 0
+    index = 0
+    if tweet:
+        tweet = tweet.lower()
+        while index < len(tweet):
+            word_end_index = tweet.find(' ', index)
+            if word_end_index < 0:
+                break
+            word = tweet[index:word_end_index]
+
+            if word in word_sentiment_sheet:
+                sentiment += word_sentiment_sheet[word]
+            elif word in phrase_sentiment_sheet:
+                for phrase in phrase_sentiment_sheet[word]:
+                    if tweet[index:].startswith(phrase):
+                        word_end_index = tweet.find(' ', index + len(phrase))
+                        sentiment += phrase_sentiment_sheet[word][phrase]
+                        break
+            index = word_end_index + 1
+    return sentiment
+
+
 def print_sentiment(filename):
     tweet_file = codecs.open(filename, encoding="utf-8")
     for line in tweet_file:
-        sentiment = 0
         tweet = json.loads(line).get('text')
-        if tweet:
-            index = 0
-            while index < len(tweet):
-                word_end_index = tweet.find(' ', index)
-                if word_end_index < 0:
-                    break
-                word = tweet[index:word_end_index]
-
-                if word in word_sentiment_sheet:
-                    sentiment += word_sentiment_sheet[word]
-                elif word in phrase_sentiment_sheet:
-                    for phrase in phrase_sentiment_sheet[word]:
-                        if tweet[index:].startswith(phrase):
-                            word_end_index = tweet.find(' ', index + len(phrase))
-                            sentiment += phrase_sentiment_sheet[word][phrase]
-                            break
-                index = word_end_index + 1
-        print sentiment
+        print get_sentiment(tweet)
 
     tweet_file.close()
 
