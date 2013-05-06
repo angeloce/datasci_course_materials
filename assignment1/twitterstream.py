@@ -61,11 +61,4 @@ def fetchsamples():
 
 
 if __name__ == '__main__':
-    url = "https://stream.twitter.com/1/statuses/sample.json"
-    parameters = []
-    opener = urllib.build_opener()
-    response = opener.open(url)
-    for line in response:
-        print line.strip()
-    raise
     fetchsamples()
