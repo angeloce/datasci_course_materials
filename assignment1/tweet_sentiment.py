@@ -38,11 +38,12 @@ def get_sentiment(tweet):
         while index < len(tweet):
             word_end_index = tweet.find(' ', index)
             if word_end_index < 0:
-                break
+                word_end_index = len(tweet)
             word = tweet[index:word_end_index]
 
             if word in word_sentiment_sheet:
                 sentiment += word_sentiment_sheet[word]
+            # phrase match
             elif word in phrase_sentiment_sheet:
                 for phrase in phrase_sentiment_sheet[word]:
                     if tweet[index:].startswith(phrase):
