@@ -22,7 +22,7 @@ def print_term_frequency(filename):
     for line in tweet_file:
         tweet = json.loads(line).get('text')
         if tweet:
-            words = tweet.strip().lower().split()
+            words = tweet.strip().split()
             for word in words:
                 if _is_term(word):
                     if word not in term_occurrences:
