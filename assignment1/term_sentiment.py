@@ -38,7 +38,7 @@ def find_unset_term_score(tweet):
     index = 0
     unset_terms = set()
     if tweet:
-        tweet = ' '.join(tweet.lower().split().strip())
+        tweet = ' '.join(tweet.strip().lower().split())
         while index < len(tweet):
             word_end_index = tweet.find(' ', index)
             if word_end_index < 0:
