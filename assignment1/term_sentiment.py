@@ -32,6 +32,14 @@ def set_sentiment_sheet(filename):
     sent_file.close()
 
 
+def _is_a_term(term):
+    if term.startswith('#') or term.startswith('@'):
+        return False
+    if term.startswith('http://t.co'):
+        return False
+    return True
+
+
 def find_unset_term_score(tweet):
     global unset_term_scores
     sentiment = 0
@@ -54,7 +62,7 @@ def find_unset_term_score(tweet):
                         word_end_index = tweet.find(' ', index + len(phrase))
                         sentiment += phrase_sentiment_sheet[word][phrase]
                         break
-            else:  # word is not in AFINN-111.txt
+            elif _is_a_term(word):  # word is not in AFINN-111.txt
                 unset_terms.add(word)
             index = word_end_index + 1
 
