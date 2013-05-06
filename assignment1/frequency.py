@@ -32,7 +32,7 @@ def print_term_frequency(filename):
 
     for term, occurrences in term_occurrences.items():
         print "%s %.4f" % (term.encode("utf-8"), float(occurrences)/total_term_count)
-        
+
 
 def main():
     print_term_frequency(sys.argv[1])
