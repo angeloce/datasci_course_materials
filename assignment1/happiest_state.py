@@ -9,11 +9,11 @@ phrase_sentiment_sheet = {}
 word_sentiment_sheet = {}
 
 
-def is_wanted_tweet(tweet):
-    if tweet:
+def is_wanted_tweet(data):
+    if data:
         try:
-            if tweet.get('text') and tweet.get('place') and tweet.get('lang') == 'en':
-                if tweet['place']['country_code'] == 'US' and tweet['place']['full_name']:
+            if data.get('text') and data.get('place') and data.get('lang') == 'en':
+                if data['place']['country_code'] == 'US' and data['place']['full_name']:
                     return True
         except:
             return False
@@ -70,10 +70,10 @@ def print_happiest_state(filename):
 
     state_sentiment = {}
     for line in tweet_file:
-        tweet = json.loads(line).get('text')
-        if is_wanted_tweet(tweet):
-            state = tweet['place']['full_name'][-2:]
-            sentiment = get_sentiment(tweet)
+        tweet_data = json.loads(line)
+        if is_wanted_tweet(tweet_data):
+            state = tweet_data['place']['full_name'][-2:]
+            sentiment = get_sentiment(tweet_data.get('text'))
             if state not in state_sentiment:
                 state_sentiment[state] = 0
             state_sentiment[state] += sentiment
